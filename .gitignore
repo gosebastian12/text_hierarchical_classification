@@ -1,0 +1,20 @@
+### See the official documentation about gitignore files at: https://git-scm.com/docs/gitignore
+# Random files
+notebooks/client_secrets.json
+
+# Data and Proprietary Files
+src/data_scripts/cursor_conn_setup.py
+data/interim/table_dataframes/**
+data/final/BOW_data/**
+
+# Unnecessary module and jupyter files
+**/.ipynb_checkpoints
+**/__pycache__
+**/.DS_Store
+src.egg-info/
+env/
+env/lib/python3.7/site-packages/kaleido/executable/bin/kaleido
+
+# Proprietary Models
+models/pre_knowledge_graph/**
+models/post_knowledge_graph/**
