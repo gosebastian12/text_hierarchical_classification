@@ -19,7 +19,8 @@ import psycopg2
 # Mapper that we will be using below.
 PATH_OF_SCRIPT = os.path.dirname(__file__)
 REL_PATH_OF_JSON_MAPPER = "../../data/raw/iab_taxonomy-v2.json"
-FULL_PATH_OF_JSON_MAPPER = os.path.join(PATH_OF_SCRIPT, REL_PATH_OF_JSON_MAPPER)
+FULL_PATH_OF_JSON_MAPPER = os.path.join(PATH_OF_SCRIPT,
+                                        REL_PATH_OF_JSON_MAPPER)
 JSON_FILE = open(FULL_PATH_OF_JSON_MAPPER)
 TABLE_TAXONOMY_MAPPER = json.load(JSON_FILE)
 JSON_FILE.close()
@@ -37,9 +38,9 @@ def connect_to_db(
     Purpose
     -------
     The purpose of this function is to establish a connection between
-    the user and a specified database so that SQL queries can be 
-    performed within a Python framework. NOTE that the Python package 
-    used to do this is Psycopg 2 (see references 1 and 2 in the 
+    the user and a specified database so that SQL queries can be
+    performed within a Python framework. NOTE that the Python package
+    used to do this is Psycopg 2 (see references 1 and 2 in the
     References section of this docstring for links about this pacakge).
 
     Parameters
@@ -65,8 +66,8 @@ def connect_to_db(
     Returns
     -------
     to_return : (Psycopg connection object, Psycopg cursor object)
-      The returned object is a **tuple** which contains a Psycopg 
-      connection and cursor objects (see references 3 and 4 in the 
+      The returned object is a **tuple** which contains a Psycopg
+      connection and cursor objects (see references 3 and 4 in the
       References section of this docstring for links that describe these
       class objects). These are the objects that allow the user to perform
       SQL queries and other database management tasks in Python.
@@ -85,7 +86,7 @@ def connect_to_db(
     conn = psycopg2.connect(conn_string)
     conn.autocommit = True
     # commits all queries you execute
-    # instantiate cursor object that will be used to execute all 
+    # instantiate cursor object that will be used to execute all
     # queries.
     cursor = conn.cursor()
 
@@ -112,7 +113,7 @@ def get_table(table_name: str, cursor, as_df=True, *args, **kwargs):
       a desired database. This is what will be used to execute the query
       to obtain data from the  specified table. See connect_to_db function
       documentation for more  information about this type of object.
-    as_df : Bool; default True 
+    as_df : Bool; default True
       This Boolean argument allows for the user to specify if they want
       the  resulting data to be placed in a Pandas DataFrame or to simply
       be returned as a list of tuples as is standard for SQL queries ran
@@ -126,20 +127,20 @@ def get_table(table_name: str, cursor, as_df=True, *args, **kwargs):
     **kwargs : dict
       The function is set up to allow for keyword arguments to specify
       particular columns that the user only wants from the data table.
-      Of course, an error will be raised if these columns do not exist 
+      Of course, an error will be raised if these columns do not exist
       in that data table.
 
     Returns
     -------
     to_return : Pandas DataFrame or list
-      This function can return one of two objects and which is dependent 
+      This function can return one of two objects and which is dependent
       on the value of the argument `as_df`. If its value is True (which
       is its default setting), then the function will attempt to convert
       the result into a Pandas DataFrame whose column labels are the exact
-      same as that of the data table that a SQL query was sent to (the 
+      same as that of the data table that a SQL query was sent to (the
       code that makes up this attempt can be found in the `tuples_to_df`
-      function below). If this attempt fails or the value of `as_df` is 
-      set to False, then the returned object will simply be a list of 
+      function below). If this attempt fails or the value of `as_df` is
+      set to False, then the returned object will simply be a list of
       tuples (where each tuple represents a row) as is standard for Psycopg
       queries.
 
@@ -150,12 +151,13 @@ def get_table(table_name: str, cursor, as_df=True, *args, **kwargs):
     to_return = None
     # define query
     if not args and not kwargs:
-    	# If the user just wants all of the columns for the specified
-    	# table that they are working with.
-        query_str = "SELECT * FROM {} WHERE content IS NOT NULL".format(table_name)
-        	# We don't want a row if there's no article for us to work
-        	# with. Take advantage of this fact to save some time with
-        	# this potentially large query.
+        # If the user just wants all of the columns for the specified
+        # table that they are working with.
+        query_str = "SELECT * FROM {} WHERE content IS NOT NULL".format(
+            table_name)
+        # We don't want a row if there's no article for us to work
+        # with. Take advantage of this fact to save some time with
+        # this potentially large query.
     elif args:
         # If the user passed in POSITIONAL arguments to specify which
         # columns of the specified table they want to pull data for.
@@ -175,22 +177,22 @@ def get_table(table_name: str, cursor, as_df=True, *args, **kwargs):
 
     # Perform any neccessary cleanup.
     if as_df:
-        # if you would like for the query result to be placed into a 
+        # if you would like for the query result to be placed into a
         # Pandas DataFrame instead of recieving a list of tuples.
         try:
-            # Throw the list of row tuples into the `tuples_to_df` 
-            # function below. Since there are assertions in the code for 
+            # Throw the list of row tuples into the `tuples_to_df`
+            # function below. Since there are assertions in the code for
             # that function, it is possible that it will raise an error.
             my_df = tuples_to_df(table_name, rows, cursor)
             to_return = my_df
         except AssertionError:
-        	# Note that the AssertionError is coming from 
-            print("""The list of tuples that was passed into the  
-            	function did NOT meet the requirement for conversion to 
-            	a DataFrame. \n\nAs a result, the object returned by  
+            # Note that the AssertionError is coming from
+            print("""The list of tuples that was passed into the
+            	function did NOT meet the requirement for conversion to
+            	a DataFrame. \n\nAs a result, the object returned by
             	this function is the list of row tuples.""")
             # raise
-            # uncomment line above in the event that you would like see 
+            # uncomment line above in the event that you would like see
             # where exactly the error is occuring.
             to_return = rows
         # If such an error gets thrown, we know that, for some reason, something
@@ -218,7 +220,7 @@ def tuples_to_df(table_name: str, rows_tuples_list: list, cursor):
       to obtain data from. Note that this table must exist in the database
       for the query to be successful.
     rows_tuple_list : list
-      This argument expect a list of tuples which was returned by the 
+      This argument expect a list of tuples which was returned by the
       `fetchall()` method of the Psycopg cursor object after the query was
       performed. This contains the data that will be placed into a Pandas
       DataFrame.
@@ -280,89 +282,93 @@ def tuples_to_df(table_name: str, rows_tuples_list: list, cursor):
                                  "-" in rows_df.label[0],
                                  "." in rows_df.label[0]]
         if np.any(special_tables_checks):
-        	# if the label to be cleaned contains any annoying 
-        	# characters that will mess up the way in which we are 
-        	# cleaning it.
-            label_series_0 = rows_df["label"].str.replace(r"\\\ ", " ").str.replace(r"\\", "")
+            # if the label to be cleaned contains any annoying
+            # characters that will mess up the way in which we are
+            # cleaning it.
+            label_series_0 = rows_df["label"].str.replace(
+                r"\\\ ", " ").str.replace(r"\\", "")
         else:
             label_series_0 = rows_df["label"].str.replace(r"\\\ ", " ")
-        
+
         # Clean values that will make a join with the taxonomy dataframe
         # possible.
-        label_series_1 = label_series_0.replace("Childrens Literature", 
+        label_series_1 = label_series_0.replace("Childrens Literature",
                                                 "Children's Literature")
-        label_series_2 = label_series_1.replace("Womens Fashion", 
+        label_series_2 = label_series_1.replace("Womens Fashion",
                                                 "Women's Fashion")
-        label_series_3 = label_series_2.replace("Childrens Clothing", 
+        label_series_3 = label_series_2.replace("Childrens Clothing",
                                                 "Children's Clothing")
-        label_series_4 = label_series_3.replace("Mens Accessories", 
+        label_series_4 = label_series_3.replace("Mens Accessories",
                                                 "Men's Accessories")
-        label_series_5 = label_series_4.replace("Mens Jewelry and Watches", 
+        label_series_5 = label_series_4.replace("Mens Jewelry and Watches",
                                                 "Men's Jewelry and Watches")
-        label_series_6 = label_series_5.replace("Mens Business Wear", 
+        label_series_6 = label_series_5.replace("Mens Business Wear",
                                                 "Men's Business Wear")
-        label_series_7 = label_series_6.replace("Mens Casual Wear", 
+        label_series_7 = label_series_6.replace("Mens Casual Wear",
                                                 "Men's Casual Wear")
-        label_series_8 = label_series_7.replace("Mens Formal Wear", 
+        label_series_8 = label_series_7.replace("Mens Formal Wear",
                                                 "Men's Formal Wear")
-        label_series_9 = label_series_8.replace("Mens Outerwear", 
+        label_series_9 = label_series_8.replace("Mens Outerwear",
                                                 "Men's Outerwear")
-        label_series_10 = label_series_9.replace("Mens Sportswear", 
+        label_series_10 = label_series_9.replace("Mens Sportswear",
                                                  "Men's Sportswear")
-        label_series_11 = label_series_10.replace("Mens Underwear and Sleepwear", 
-                                                  "Men's Underwear and Sleepwear")
-        label_series_12 = label_series_11.replace("Mens Shoes and Footwear", 
+        label_series_11 = label_series_10.replace(
+            "Mens Underwear and Sleepwear",
+            "Men's Underwear and Sleepwear")
+        label_series_12 = label_series_11.replace("Mens Shoes and Footwear",
                                                   "Men's Shoes and Footwear")
-        label_series_13 = label_series_12.replace("Childrens TV", 
+        label_series_13 = label_series_12.replace("Childrens TV",
                                                   "Children's TV")
-        label_series_14 = label_series_13.replace("Childrens Health", 
+        label_series_14 = label_series_13.replace("Childrens Health",
                                                   "Children's Health")
-        label_series_15 = label_series_14.replace("Mens Health", 
+        label_series_15 = label_series_14.replace("Mens Health",
                                                   "Men's Health")
-        label_series_16 = label_series_15.replace("Womens Health", 
+        label_series_16 = label_series_15.replace("Womens Health",
                                                   "Women's Health")
-        label_series_17 = label_series_16.replace("Childrens Music", 
+        label_series_17 = label_series_16.replace("Childrens Music",
                                                   "Children's Music")
-        label_series_18 = label_series_17.replace("Childrens Games and Toys", 
+        label_series_18 = label_series_17.replace("Childrens Games and Toys",
                                                   "Children's Games and Toys")
-        label_series_19 = label_series_18.replace("Womens Accessories", 
+        label_series_19 = label_series_18.replace("Womens Accessories",
                                                   "Women's Accessories")
-        label_series_20 = label_series_19.replace("Womens Glasses", 
+        label_series_20 = label_series_19.replace("Womens Glasses",
                                                   "Women's Glasses")
-        label_series_21 = label_series_20.replace("Womens Handbags and Wallets", 
-                                                  "Women's Handbags and Wallets")
-        label_series_22 = label_series_21.replace("Womens Hats and Scarves", 
+        label_series_21 = label_series_20.replace(
+            "Womens Handbags and Wallets",
+            "Women's Handbags and Wallets")
+        label_series_22 = label_series_21.replace("Womens Hats and Scarves",
                                                   "Women's Hats and Scarves")
-        label_series_23 = label_series_22.replace("Womens Jewelry and Watches", 
-                                                  "Women's Jewelry and Watches")
-        label_series_24 = label_series_23.replace("Womens Clothing", 
+        label_series_23 = label_series_22.replace(
+            "Womens Jewelry and Watches", "Women's Jewelry and Watches")
+        label_series_24 = label_series_23.replace("Womens Clothing",
                                                   "Women's Clothing")
-        label_series_25 = label_series_24.replace("Womens Business Wear", 
+        label_series_25 = label_series_24.replace("Womens Business Wear",
                                                   "Women's Business Wear")
-        label_series_26 = label_series_25.replace("Womens Casual Wear", 
+        label_series_26 = label_series_25.replace("Womens Casual Wear",
                                                   "Women's Casual Wear")
-        label_series_27 = label_series_26.replace("Womens Formal Wear", 
+        label_series_27 = label_series_26.replace("Womens Formal Wear",
                                                   "Women's Formal Wear")
-        label_series_28 = label_series_27.replace("Womens Intimates and Sleepwear", 
-                                                  "Women's Intimates and Sleepwear")
-        label_series_29 = label_series_28.replace("Womens Outerwear", 
+        label_series_28 = label_series_27.replace(
+            "Womens Intimates and Sleepwear",
+            "Women's Intimates and Sleepwear")
+        label_series_29 = label_series_28.replace("Womens Outerwear",
                                                   "Women's Outerwear")
-        label_series_30 = label_series_29.replace("Womens Sportswear", 
+        label_series_30 = label_series_29.replace("Womens Sportswear",
                                                   "Women's Sportswear")
-        label_series_31 = label_series_30.replace("Womens Shoes and Footwear", 
+        label_series_31 = label_series_30.replace("Womens Shoes and Footwear",
                                                   "Women's Shoes and Footwear")
-        label_series_32 = label_series_31.replace("Mens Fashion", 
+        label_series_32 = label_series_31.replace("Mens Fashion",
                                                   "Men's Fashion")
-        label_series_33 = label_series_32.replace("Mens Clothing", 
+        label_series_33 = label_series_32.replace("Mens Clothing",
                                                   "Men's Clothing")
 
         rows_df["cleaned_label"] = label_series_33
     except (AttributeError, KeyError):
-        # If the original SQL result that the user wishes to convert 
-        # into a DataFrame does NOT have the column `label`. In which 
-        # case there is no way to  create the "cleaned_label" column 
+        # If the original SQL result that the user wishes to convert
+        # into a DataFrame does NOT have the column `label`. In which
+        # case there is no way to  create the "cleaned_label" column
         # done above. This is taken care of in the join_with_taxonomy
-        # function defined below. 
+        # function defined below.
         pass
 
     to_return = rows_df
@@ -376,14 +382,14 @@ def load_in_taxonomy(
     """
     Purpose
     -------
-    The purpose of this function is to load in and then clean up (if 
-    desired) the CSV that lists out the taxonomy that describes the 
+    The purpose of this function is to load in and then clean up (if
+    desired) the CSV that lists out the taxonomy that describes the
     classification scheme we will be using throughout this project.
 
     Parameters
     ----------
     rel_path_to_taxonomy_file : str
-      The default value is set to where the CSV file that we will be 
+      The default value is set to where the CSV file that we will be
       loading live in relation to where this script lives. This of course
       can be over-written to the set-up that the user prefers.
     include_class_compilation : Boolean
@@ -407,7 +413,8 @@ def load_in_taxonomy(
     4. https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html
     """
     # First things, first load in the csv file into a Pandas DataFrame.
-    path_to_taxonomy_file = os.path.join(path_of_script, rel_path_to_taxonomy_file)
+    path_to_taxonomy_file = os.path.join(
+        path_of_script, rel_path_to_taxonomy_file)
 
     raw_taxonomy_df = pd.read_csv(
         filepath_or_buffer=path_to_taxonomy_file,
@@ -422,8 +429,8 @@ def load_in_taxonomy(
 
     # Now clean it so that we can actually use it below.
     taxonomy_df = raw_taxonomy_df.drop(index=698).reset_index(drop=True)
-    	# See the notebook `1_Taxonomy_Exploration.ipynb` that is in the
-    	# notebooks directory to see why this is being done.
+    # See the notebook `1_Taxonomy_Exploration.ipynb` that is in the
+    # notebooks directory to see why this is being done.
 
     if include_class_compilation:
         # if the user wishes to add a new column that contains a list of strings that specify all of
@@ -433,9 +440,9 @@ def load_in_taxonomy(
 
         checked_names_series = taxonomy_df.apply(name_checker, axis=1)
         assert checked_names_series.sum() == taxonomy_df.shape[0]
-        # If we pass this test, then we know that the `Name` column in 
-        # our DataFrame is reliable. NOTE that we can only perform this 
-        # test if we have compiled all of the (non-null) tier strings in 
+        # If we pass this test, then we know that the `Name` column in
+        # our DataFrame is reliable. NOTE that we can only perform this
+        # test if we have compiled all of the (non-null) tier strings in
         # a list; this is why this test is in this if-block.
 
     to_return = taxonomy_df
@@ -447,11 +454,11 @@ def name_checker(row):
     """
     Purpose
     -------
-    The purpose of this function is to check whether or not the last 
-    element of the list that exists in the `Tiers_list` column is 
-    identical to the value that is in the `Name` column. NOTE THAT THIS 
-    FUNCTION IS  WRITTEN TO BE USED WITH THE `apply()` METHOD OF A 
-    PANDAS DATAFRAME. You have to make sure that the axis keyword of 
+    The purpose of this function is to check whether or not the last
+    element of the list that exists in the `Tiers_list` column is
+    identical to the value that is in the `Name` column. NOTE THAT THIS
+    FUNCTION IS  WRITTEN TO BE USED WITH THE `apply()` METHOD OF A
+    PANDAS DATAFRAME. You have to make sure that the axis keyword of
     that method is set to 1 since this function accepts a DataFrame Row.
 
     Parameters
@@ -468,8 +475,8 @@ def name_checker(row):
       Whichis dependent on whether or not the `Tiers_list` column exists
       in the row that is being use; if it does not, then the result will
       be `NaN` because there is no way to make the comparisions done in
-      the function. It it does, then the comparisions can be done and so 
-      `True` will be returned if the elements are identical and False 
+      the function. It it does, then the comparisions can be done and so
+      `True` will be returned if the elements are identical and False
       otherwise.
 
     References
@@ -496,18 +503,18 @@ def class_sequence_compiler(row):
     Purpose
     -------
     The purpose of this function is to take all of the Tier labels that
-    exist in each row of a DataFrame and compile them into a list; the 
+    exist in each row of a DataFrame and compile them into a list; the
     length of this list is dependent on how many non-null values exist
-    in these Tier columns. NOTE THAT THIS  FUNCTION IS  WRITTEN TO BE 
-    USED WITH THE `apply()` METHOD OF A  PANDAS DATAFRAME. You have to 
-    make sure that the axis keyword of that method is set to 1 since 
+    in these Tier columns. NOTE THAT THIS  FUNCTION IS  WRITTEN TO BE
+    USED WITH THE `apply()` METHOD OF A  PANDAS DATAFRAME. You have to
+    make sure that the axis keyword of that method is set to 1 since
     this function accepts a DataFrame Row.
 
     Parameters
     ----------
     row : Pandas DataFrame row
       This is a row of a Pandas DataFrame which we will use to perform
-      all of our operations. Again, remember to set the axis keyword of 
+      all of our operations. Again, remember to set the axis keyword of
       `apply()` to 1.
 
     Returns
@@ -530,8 +537,8 @@ def class_sequence_compiler(row):
                               tier_3_str.lower() == 'nan',
                               tier_4_str.lower() == 'nan']
     if np.all(nan_for_all_conditions):
-        # If we are working with a row that corresponds to a parent 
-        # node. We do NOT need to do anything since we have already 
+        # If we are working with a row that corresponds to a parent
+        # node. We do NOT need to do anything since we have already
         # appended that tier label to the final Tiers list.
         pass
     elif np.all(nan_for_all_conditions[1::]):
@@ -555,10 +562,10 @@ def join_with_taxonomy(table_name: str, cursor):
     """
     Purpose
     -------
-    The purpose of this function is to match up each row instance that 
+    The purpose of this function is to match up each row instance that
     was obtained by a SQL query with the Tier labels that live in the
-    taxonomy DataFrame and JSON file. That way, we can know immediately 
-    where exactly each article lives in the hierarchy classification 
+    taxonomy DataFrame and JSON file. That way, we can know immediately
+    where exactly each article lives in the hierarchy classification
     scheme.
 
     Parameters
@@ -568,7 +575,7 @@ def join_with_taxonomy(table_name: str, cursor):
       want to obtain data from. Note that this table must exist in the
       database for the query to be successful.
     cursor : Psycopg cursor object
-      This object represents the connection that was previously made to 
+      This object represents the connection that was previously made to
       a desired database. This is what will be used to execute the query
       to obtain data from the specified table. See connect_to_db function
       documentation for more information about this type of object.
@@ -603,53 +610,55 @@ def join_with_taxonomy(table_name: str, cursor):
         content_df.drop(columns=["index", "label"])
     except (KeyError, AttributeError):
         # That is, if the returned table dataframe was not returned with
-        # the label column in which case we will have to use the 
-        # taxonomy JSON file to figure out what the `label` for these 
+        # the label column in which case we will have to use the
+        # taxonomy JSON file to figure out what the `label` for these
         # instances are.
         content_df.drop(columns="index")
-            # We still want to drop this column. Every row of all of the
-            # tables will have this column, so this will NOT raise an
-            # error.
-        table_name_to_map = table_name[table_name.index("_") + 1::].replace("_", ".")
-        	# if you take a look at the taxonomy JSON file, you will
-        	# see why this is neccessary.
-        tiers_dict = np.any([ tax.get(table_name_to_map, None) for tax in TABLE_TAXONOMY_MAPPER ])
-        	# we have to check the list comprehension because the mapper
-        	# is a list of dictionaries.
-        
+        # We still want to drop this column. Every row of all of the
+        # tables will have this column, so this will NOT raise an
+        # error.
+        table_name_to_map = table_name[table_name.index(
+            "_") + 1::].replace("_", ".")
+        # if you take a look at the taxonomy JSON file, you will
+        # see why this is neccessary.
+        tiers_dict = np.any([tax.get(table_name_to_map, None)
+                             for tax in TABLE_TAXONOMY_MAPPER])
+        # we have to check the list comprehension because the mapper
+        # is a list of dictionaries.
+
         tiers_list = []
         for i, j in tiers_dict.items():
-        	# it is certainly possible that we have matched with more
-        	# than one key of the mapper.
-            assert type(i) == str
-            	# i represents the parent node of the class sequence.
+            # it is certainly possible that we have matched with more
+            # than one key of the mapper.
+            assert isinstance(i, str)
+            # i represents the parent node of the class sequence.
             tiers_list.append(i)
             maybe_dict = j
-            while type(maybe_dict) == dict:
-            	# the taxonomy is defined so that it constantly points
-            	# to dictionaries if there are still more tiers in the
-            	# class sequence.
+            while isinstance(maybe_dict, dict):
+                # the taxonomy is defined so that it constantly points
+                # to dictionaries if there are still more tiers in the
+                # class sequence.
                 for new_i, new_j in maybe_dict.items():
-                    assert type(new_i) == str
+                    assert isinstance(new_i, str)
                     tiers_list.append(new_i)
                     maybe_dict = new_j
-            assert type(maybe_dict) == str
+            assert isinstance(maybe_dict, str)
             tiers_list.append(maybe_dict)
-            	# once maybe_dict is a str, we are ready to append it.
-            
+            # once maybe_dict is a str, we are ready to append it.
+
         label = tiers_list[-1]
-        content_df["cleaned_label"] = [label]*content_df.shape[0]
+        content_df["cleaned_label"] = [label] * content_df.shape[0]
 
     # Now do the join.
     if table_name == "table_26_3_7_2":
-    	# For some reason, there are two different rows in the 
-    	# taxonomy DataFrame that have "email" for its value of "Name".
-    	taxonomy_df = taxonomy_df[taxonomy_df.Name == "Email"][0:1:]
+        # For some reason, there are two different rows in the
+        # taxonomy DataFrame that have "email" for its value of "Name".
+        taxonomy_df = taxonomy_df[taxonomy_df.Name == "Email"][0:1:]
 
     joined_df = content_df.merge(right=taxonomy_df,
-    	                         how="inner",
-    	                         left_on="cleaned_label",
-    	                         right_on="Name").drop(columns="Name")
+                                 how="inner",
+                                 left_on="cleaned_label",
+                                 right_on="Name").drop(columns="Name")
     assert joined_df.shape[0] == content_df.shape[0]
     # We want to make sure that every row (which corresponds to a unique article) gets
     # matched up with `Tier1`, `Tier2`, `Tier3`, and `Tier4` values.
@@ -671,59 +680,56 @@ def join_with_taxonomy(table_name: str, cursor):
 
 def load_in_full_data(
         rel_path_to_pickles="../../data/interim/table_dataframes"):
-	"""
-	Purpose
-	-------
-	The purpose of this function is to provide an easy tool for the user
-	to quickly download all of the article data that we have. This handles
-	all of the 
+    """
+    Purpose
+    -------
+    The purpose of this function is to provide an easy tool for the user
+    to quickly download all of the article data that we have. This handles
+    all of the
 
-	Parameters
-	----------
-	rel_path_to_pickles : str
-    This string represents the path to the directory where the pickled
-    DataFrames that we wish we to load in are stroed RELATIVE TO THIS
-    SCRIPT; not relative to whatever directory you are in when using this
-    function.
+    Parameters
+    ----------
+    rel_path_to_pickles : str
+      This string represents the path to the directory where the pickled
+      DataFrames that we wish we to load in are stroed RELATIVE TO THIS
+      SCRIPT; not relative to whatever directory you are in when using
+      this function.
 
-	Returns
-	-------
-  to_return : Pandas DataFrame
-    This function returns the result of loading in the pickled DataFrame
-    and doing some minor clean-up to it.
+    Returns
+    -------
+    to_return : Pandas DataFrame
+      This function returns the result of loading in the pickled DataFrame
+      and doing some minor clean-up to it.
 
-	References
-	----------
-	1. https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html
-	2. https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
-	"""
-	to_return = None
-	# First, get everything about the paths straightened out.
-	script_path = PATH_OF_SCRIPT
-	full_path_to_pickles = os.path.join(script_path, 
-		                                rel_path_to_pickles)
+    References
+    ----------
+    1. https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html
+    2. https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
+    """
+    to_return = None
+    # First, get everything about the paths straightened out.
+    script_path = PATH_OF_SCRIPT
+    full_path_to_pickles = os.path.join(script_path,
+                                        rel_path_to_pickles)
 
-	# Now, compile the names of all of these files and do some 
-	# validation checks
-	file_names = os.listdir(full_path_to_pickles)
-	assert len([file for file in file_names if file[-4::] == ".pkl"]) == len(file_names)
+    # Now, compile the names of all of these files and do some
+    # validation checks
+    file_names = os.listdir(full_path_to_pickles)
+    assert len([file for file in file_names if file[-4::]
+                == ".pkl"]) == len(file_names)
 
-	# Load in the files and put them all in one DataFrame.
-	loaded_in_dfs_list = [ pd.read_pickle("{}/{}".format(full_path_to_pickles, file)) for file in file_names ]
-	full_df = pd.concat(
-		objs=loaded_in_dfs_list, 
-		ignore_index=True).drop(columns=["index", "label", "level_0"]
-		)
+    # Load in the files and put them all in one DataFrame.
+    loaded_in_dfs_list = [pd.read_pickle(
+        "{}/{}".format(full_path_to_pickles, file)) for file in file_names]
+    full_df = pd.concat(
+        objs=loaded_in_dfs_list,
+        ignore_index=True).drop(columns=["index", "label", "level_0"]
+                                )
 
-	# Clean up the obtained data.
-	full_df["Preprocessed_Content"] = full_df.Preprocessed_Content.replace(
-		"", np.NaN)
-	final_full_df = full_df.dropna(subset=["Preprocessed_Content"])
+    # Clean up the obtained data.
+    full_df["Preprocessed_Content"] = full_df.Preprocessed_Content.replace(
+        "", np.NaN)
+    final_full_df = full_df.dropna(subset=["Preprocessed_Content"])
 
-	to_return = final_full_df
-	return to_return
-
-
-
-
-
+    to_return = final_full_df
+    return to_return

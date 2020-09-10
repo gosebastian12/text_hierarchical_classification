@@ -1,4 +1,4 @@
-    #!/usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Tues Jul 21
@@ -62,7 +62,7 @@ def children_retrival(
         the tier 1 (what has oftentimes been referred to as the parent
         class labels throughout this project), then simply pass in the
         string "parents" to this argument.
-    full_dict : dict 
+    full_dict : dict
         This dictionary is the loaded in taxonomy dictionary that is
         obtained from taxonomy JSON file (see purpose section for more
         about this file).
@@ -94,7 +94,7 @@ def children_retrival(
         # First, go through the taxonomy dictionary and get the cases
         # that contain this parent label for further inspection.
         matched_dicts_list = [
-            potential_dict for potential_dict in full_dict \
+            potential_dict for potential_dict in full_dict
             if parent_class_label in str(potential_dict).lower()]
 
         # Now use each of these matched dictionaries to see if we can
@@ -184,7 +184,7 @@ def class_data_retrival(
         this parameter.
     give_child_tier_lvl : Bool
         This Boolean allows the user to control whether or not the function
-        returns the tier level that the children classes of 
+        returns the tier level that the children classes of
         `parent_class_label` live in the classification taxonomy or not.
         If set to False (which is its default value), then the function
         will NOT return this value and if it is set to True, it WILL.
@@ -217,7 +217,7 @@ def class_data_retrival(
     # classes of the specified parent class.
     tier_label = "Tier{}".format(child_tier_lvl)
     child_articles_dfs_list = [
-        full_data_frame[full_data_frame[tier_label] == child_label] \
+        full_data_frame[full_data_frame[tier_label] == child_label]
         for child_label in children_list
     ]
     articles_class_df = pd.concat(objs=child_articles_dfs_list,
@@ -253,18 +253,18 @@ def bag_of_words_converter(
             1. "TF" - In this mode, the Term-Frequency approach will be
                       used to convert the textual data to numeric data.
             2. "TF-IDF" - In this mode, the Term-Frequency-Inverse-
-                          Document-Frequency approach will be used to 
+                          Document-Frequency approach will be used to
                           convert the textual data to numeric data.
     parent_class_label : str or NoneType
         If this argument is a string, then it represents the class label
         that is the parent class of all of the sub-classes that will be
-        distignuished and predicted by a classifier that you wish to build. 
+        distignuished and predicted by a classifier that you wish to build.
         I.e., if you want to build a classifier for the children of the
         "Auto Type" class (which includes "Budget Cars", "Concept Cars",
         and "Luxury Cars" to name a few), then you simply have to pass in
         the "Auto Type" string to this parameter.
 
-        If this argument is instead a NoneType object, then the 
+        If this argument is instead a NoneType object, then the
         `class_data_retrival` function will NOT be called. Instead, the
         value that the `articles_df` variable will take on is whatever
         the user has specified with the keyword argument `articles_df`
@@ -280,14 +280,14 @@ def bag_of_words_converter(
                                contents will be converted to a numerical
                                form using a specified bag-of-words model.
                                NOTE that the value of this keyword argument
-                               will be ignored if the `parent_class_label` 
+                               will be ignored if the `parent_class_label`
                                argument is NOT a NoneType object.
-            2. "lower_n_gram" - This keyword argument  allows the user to 
+            2. "lower_n_gram" - This keyword argument  allows the user to
                                 specify what they would like lower bound
                                 for the setting of the n-gram parameter
                                 in the used BOW model. Its default value
                                 will be 1 when it is notspecified.
-            3. "upper_n_gram" - This keyword argument allows the user to 
+            3. "upper_n_gram" - This keyword argument allows the user to
                                 specify what they would like upper bound
                                 for the setting of the n-gram parameter
                                 in the used BOW model. Its default value
@@ -299,7 +299,7 @@ def bag_of_words_converter(
                                   prevent your classifier that gets trained
                                   on the returned BOW data from over-
                                   fitting to this data. Its default value
-                                  is `None` meaning that the implemented 
+                                  is `None` meaning that the implemented
                                   model will not have such an upper bound
                                   on the number of features it can create.
             5. "apply_pca" - This keyword argument allows the user to
@@ -311,7 +311,7 @@ def bag_of_words_converter(
             6. "pca_ncomps" - This keyword argument allows the user to
                               specify how many features to keep after a
                               PCA tranformation is applied. Its allowed
-                              setting is identical to `n_components` 
+                              setting is identical to `n_components`
                               argument that is specifed in the sklearn PCA
                               model instantiation. Its default value is
                               0.95 Note that this parameters is ignored
@@ -512,8 +512,8 @@ def imbalance_handler(
                     # object with the first two labels that we want to
                     # remove.
                     conditions_to_remove = np.logical_and(
-                    	raw_articles_df[child_tier_label] != labels_with_less[i],
-                    	raw_articles_df[child_tier_label] != labels_with_less[i + 1])
+                        raw_articles_df[child_tier_label] != labels_with_less[i],
+                        raw_articles_df[child_tier_label] != labels_with_less[i + 1])
                 elif i > 1:
                     # If we are on either our third or further down
                     # iteration. If this is the case, then we know that
@@ -521,7 +521,7 @@ def imbalance_handler(
                     # instantiated. We just need to add on to it with
                     # the remaining labels that we would like to remove.
                     conditions_to_remove = np.logical_and(
-                        conditions_to_remove, raw_articles_df[child_tier_label] \
+                        conditions_to_remove, raw_articles_df[child_tier_label]
                         != labels_with_less[i])
             articles_df = raw_articles_df[conditions_to_remove]
 
@@ -599,7 +599,7 @@ def bow_data_saver(
         includes "Budget Cars", "Concept Cars", and "Luxury Cars" to name
         a few), then you simply have to pass in the "Auto Type" string to
         this parameter.
-	obtain_data : Bool
+        obtain_data : Bool
         This Boolean allows the user to indicate how they would like to
         obtain the data that will ultimately be saved. If set to True (which
         is its default value), then this function will call the
@@ -617,7 +617,7 @@ def bow_data_saver(
         means. As such, the values of ANY Keyword Arguments will be ignored
         if the value of `obtain_data` is set to True. The accepted keyword
         arguments are:
-            1. "feature_matrix" - This keyword argument allows the user 
+            1. "feature_matrix" - This keyword argument allows the user
                                   to specify what feature matrix to save.
             2. "labels_arr" - This keyword argument allows the user to
                               specify what labels array to save.
@@ -680,7 +680,7 @@ def bow_data_saver(
     files_in_saving_dir = os.listdir()
     if "{}.npz".format(save_file_name) in files_in_saving_dir:
         to_return = "BOW data for child classes of {} saved successfully!"\
-        .format(parent_class_label)
+            .format(parent_class_label)
     else:
         to_return = "BOW data saving failed."
 
@@ -688,7 +688,7 @@ def bow_data_saver(
 
 
 def bow_data_loader(
-        parent_class_label: str, 
+        parent_class_label: str,
         rel_path_to_bow_directory="../../data/final/BOW_data"):
     """
     Purpose
@@ -696,7 +696,7 @@ def bow_data_loader(
     The purpose of this function is to provide an easy tool for the user
     to load in a particular bag of words (bow) dataset by simply
     specifying the class label of the parent class.
-    
+
     Parameters
     ----------
     parent_class_label : str
@@ -725,21 +725,20 @@ def bow_data_loader(
     full_path_to_directory = os.path.join(script_path,
                                           rel_path_to_bow_directory)
     os.chdir(full_path_to_directory)
-    
+
     # Obtain the correct file name to load in
     files_in_dir = os.listdir()
     file_name_list = [
-        file for file in files_in_dir \
-        if file[file.find("_")+1:-4:] == normalized_pcl
+        file for file in files_in_dir
+        if file[file.find("_") + 1:-4:] == normalized_pcl
     ]
     assert len(file_name_list) == 1
     file_name = file_name_list[0]
-    
+
     # Now, load in the data and save the results to return.
     numpy_load_obj = np.load(file_name)
     feat_mat, labs_ar = numpy_load_obj["arr_0"], numpy_load_obj["arr_1"]
     assert feat_mat.shape[0] == labs_ar.size
     to_return = (feat_mat, labs_ar)
-    
-    return to_return
 
+    return to_return

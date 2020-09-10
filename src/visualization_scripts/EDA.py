@@ -27,8 +27,8 @@ def node_counter(last_tier: str, data_frame: pd.DataFrame):
     """
     Purpose
     -------
-    The purpose of this function is to determine how many articles 
-    belong to the class labels that make up the tier level that the user 
+    The purpose of this function is to determine how many articles
+    belong to the class labels that make up the tier level that the user
     gets to specify.
 
     Parameters
@@ -38,7 +38,7 @@ def node_counter(last_tier: str, data_frame: pd.DataFrame):
         with (i.e., `Tier3`. These labels that belong to this tier will
         be the labels that we will then investigate to determine how many
         articles belong to each.
-    data_frame : Pandas DataFrame 
+    data_frame : Pandas DataFrame
         This is the DataFrame that will be used to perform the calculations
         and operations to determine the number of articles that belong to
         the specified labels.
@@ -46,7 +46,7 @@ def node_counter(last_tier: str, data_frame: pd.DataFrame):
     Returns
     -------
     to_return : dict
-        The returned object is a Python dictionary whose keys are 
+        The returned object is a Python dictionary whose keys are
         `Node_labels` and `Node_counts`. The first key points to all of
         the class labels that live in the specified tier level and the
         second key points to the number of articles that are in each of
@@ -60,7 +60,7 @@ def node_counter(last_tier: str, data_frame: pd.DataFrame):
         NOT match the number of article counts. We raise an error instead
         of just creating the dictionary that will be returned because such
         a case would result in there not be a  1-to-1 mapping between the
-        two lists that make up the values of the dictionary that would be 
+        two lists that make up the values of the dictionary that would be
         returned.
     """
     # Create the grouping tiers list
@@ -99,16 +99,16 @@ def histogram(data_frame: pd.DataFrame, x_arg: str, **kwargs):
     """
     Purpose
     -------
-    The purpose of this function is to create a histogram using Ploty 
-    and user-specified data in a way that defaults to additional plot 
+    The purpose of this function is to create a histogram using Ploty
+    and user-specified data in a way that defaults to additional plot
     formatting that helps make it look more visually apealing while also
-    being flexibile enough to allow for the user to easily specify 
+    being flexibile enough to allow for the user to easily specify
     formatting that they want.
 
     Parameters
     ----------
     data_frame : Pandas DataFrame
-        This DataFrame contains the data that will be plotted in the 
+        This DataFrame contains the data that will be plotted in the
         resulting figure.
     x_args : str
         Whenever we plot a histogram, we need to specify what the quantity
@@ -118,22 +118,22 @@ def histogram(data_frame: pd.DataFrame, x_arg: str, **kwargs):
         The use of keyword arguments in this function is to specify
         parameters of the histogram that control its functionality and
         apparence. If these arguments are not specified, then they will
-        either default to their default values of `px.histogram()` or will 
+        either default to their default values of `px.histogram()` or will
         default to pre-determined values. The list of accepted keyword
         arguments (and the values that they default to when not specified)
         are listed directly below. If you are trying to customize a certain
         part of the plot and not seeing any changes, it may be due to the
         fact that you are not passing in the correct keyword.
             1. `x_label` (str) - Plotly (and thus, to an extent, this
-                                 function) will default to having the 
+                                 function) will default to having the
                                  x-axis label be whatever `x_arg` is. The
                                  user can specify what they want this label
                                  to be instead by passing in a value to
                                  this acepted keyword argument.
             2. `y_label` (str) - Plotly (and thus, to an extent, this
-                                 function) will default to having the 
-                                 y-axis label be "count" for histograms. 
-                                 The user can specify what they want this 
+                                 function) will default to having the
+                                 y-axis label be "count" for histograms.
+                                 The user can specify what they want this
                                  label to be instead by passing in a value
                                  to this acepted keyword argument.
             3. `plot_title` (str) - Ploty will default to having no plot
@@ -150,19 +150,19 @@ def histogram(data_frame: pd.DataFrame, x_arg: str, **kwargs):
             5. `lower_x` (int) - Plotly (and thus this function) default
                                  to the lower bound of the x-axis being
                                  the minimumof the passed in data. If the
-                                 user wishes to specify their own lower 
+                                 user wishes to specify their own lower
                                  bound for x, they can do so with this
                                  accepted keyword argument.
             6. `upper_x` (int) - Plotly (and thus this function) default
                                  to the upper bound of the x-axis being
                                  the maximum of the passed in data. If the
-                                 user wishes to specify their own upper 
+                                 user wishes to specify their own upper
                                  bound for x, they can do so with this
                                  accepted keyword argument.
             7. `lower_y` (int) - Plotly (and thus this function) default
                                  to the lower bound of the y-axis being
                                  0. If the user wishes to specify their
-                                 own lower bound for y, they can do so 
+                                 own lower bound for y, they can do so
                                  with this accepted keyword argument.
             8. `upper_y` (int) - Plotly (and thus this function) default
                                  to the upper bound of the y-axis being
@@ -170,10 +170,10 @@ def histogram(data_frame: pd.DataFrame, x_arg: str, **kwargs):
                                  If the user wishes to  specify their own
                                  upper bound for y, they can do so with
                                  this accepted keyword argument.
-            9. `to_normalize` (str) - This is exactly theargument `histnorm` 
+            9. `to_normalize` (str) - This is exactly theargument `histnorm`
                                       of px.histogram. See reference number
                                       1 below for its accepted values.
-            10. `to_cumaliate` (Bool) - Plotly (and thus this function) 
+            10. `to_cumaliate` (Bool) - Plotly (and thus this function)
                                         will default to the histogram NOT
                                         representing a cumulative
                                         distribution. If the user wishes
@@ -185,8 +185,8 @@ def histogram(data_frame: pd.DataFrame, x_arg: str, **kwargs):
                                         However, this function will default
                                         this value to 0.65. If the user
                                         wishes to specify their own value,
-                                        they can do so by passing in a 
-                                        float between 0 and 1 to this 
+                                        they can do so by passing in a
+                                        float between 0 and 1 to this
                                         accepted keywordargument.
             12. `bar_color` (str) - Plotly will, by default, set the color
                                     of the bars to blue. This function will
@@ -290,7 +290,7 @@ def histogram(data_frame: pd.DataFrame, x_arg: str, **kwargs):
                                   "y": 0.965,
                                   "x": 0.5,
                                   "xanchor": "center",
-                                  "yanchor": "top"`})
+                                  "yanchor": "top"})
 
     to_return = hist_obj
 
@@ -301,16 +301,16 @@ def bar_plot(data_frame: pd.DataFrame, x_arg: str, y_arg: str, **kwargs):
     """
     Purpose
     -------
-    The purpose of this function is to create a bar chart using Ploty 
-    and user-specified data in a way that defaults to additional plot 
+    The purpose of this function is to create a bar chart using Ploty
+    and user-specified data in a way that defaults to additional plot
     formatting that helps make it look more visually apealing while also
-    being flexibile enough to allow for the user to easily specify 
+    being flexibile enough to allow for the user to easily specify
     formatting that they want.
 
     Parameters
     ----------
     data_frame : Pandas DataFrame
-        This DataFrame contains the data that will be plotted in the 
+        This DataFrame contains the data that will be plotted in the
         resulting figure.
     x_arg : str
         This required argument allows the user to specify what column in
@@ -324,21 +324,21 @@ def bar_plot(data_frame: pd.DataFrame, x_arg: str, y_arg: str, **kwargs):
         The use of keyword arguments in this function is to specify
         parameters of the bar chart that control its functionality and
         apparence. If these arguments are not specified, then they will
-        either default to their default values of `px.bar()` or will 
+        either default to their default values of `px.bar()` or will
         default to pre-determined values. The list of accepted keyword
         arguments (and the values that they default to when not specified)
         are listed directly below. If you are trying to customize a certain
         part of the plot and not seeing any changes, it may be due to the
         fact that you are not passing in the correct keyword.
             1. `x_label` (str) - Plotly (and thus, to an extent, this
-                                 function) will default to having the 
+                                 function) will default to having the
                                  x-axis label be whatever `x_arg` is. The
                                  user can specify what they want this
                                  label to be instead by passing in a value
                                  to this acepted keyword argument.
             2. `y_label` (str) - Plotly (and thus, to an extent, this
                                  function) will default to having the
-                                 y-axis label be whatever `y_arg` is. The 
+                                 y-axis label be whatever `y_arg` is. The
                                  user can specify what they want this label
                                  to be instead by passing in a value to
                                  this acepted keyword argument.
@@ -352,7 +352,7 @@ def bar_plot(data_frame: pd.DataFrame, x_arg: str, y_arg: str, **kwargs):
             4. `lower_x` (int) - Plotly (and thus this function) default
                                  to the lower bound of the x-axis being
                                  the minimum of the passed in data. If the
-                                 user wishes to specify their own lower 
+                                 user wishes to specify their own lower
                                  bound for x, they can do so with this
                                  accepted keyword argument.
             5. `upper_x` (int) - Plotly (and thus this function) default
@@ -364,7 +364,7 @@ def bar_plot(data_frame: pd.DataFrame, x_arg: str, y_arg: str, **kwargs):
             6. `lower_y` (int) - Plotly (and thus this function) default
                                  to the lower bound of the y-axis being
                                  0. If the user wishes to specify their
-                                 own lower bound for y, they can do so 
+                                 own lower bound for y, they can do so
                                  with this accepted keyword argument.
             7. `upper_y` (int) - Plotly (and thus this function) default
                                  to the upper bound of the y-axis being
@@ -377,15 +377,15 @@ def bar_plot(data_frame: pd.DataFrame, x_arg: str, y_arg: str, **kwargs):
                                        However, this function will default
                                        this value to 0.65. If the user
                                        wishes to specify their own value,
-                                       they can do so by passing in a 
-                                       float between 0 and 1 to this 
+                                       they can do so by passing in a
+                                       float between 0 and 1 to this
                                        accepted keyword argument.
             9. `bar_color` (str) - Plotly will, by default, set the color
                                    of the bars to blue. This function will
                                    default to "rgb(95, 62, 227)" which is
                                    a lighter shade of purple. If the user
                                    wish to specify their own color, they
-                                   can do so by using this accepted keyword 
+                                   can do so by using this accepted keyword
                                    argument.
             10. `plot_width` (int) - This accepted keyword argument allows
                                      the user to specify the width they
@@ -403,7 +403,7 @@ def bar_plot(data_frame: pd.DataFrame, x_arg: str, y_arg: str, **kwargs):
                                        labels to be rotated. This is
                                        particularly useful for when these
                                        labels are long strings of text.
-            13. `desired_orientation` (str) - This accepted keyword 
+            13. `desired_orientation` (str) - This accepted keyword
                                               argument allows for the user
                                               to specify whether they want
                                               the bars to be vertical
@@ -506,14 +506,19 @@ def bar_plot(data_frame: pd.DataFrame, x_arg: str, y_arg: str, **kwargs):
     return to_return
 
 
-def violin_plot(label_name, data_frame: pd.DataFrame, x_arg: str, mode="word", **kwargs):
+def violin_plot(
+        label_name,
+        data_frame: pd.DataFrame,
+        x_arg: str,
+        mode="word",
+        **kwargs):
     """
     Purpose
     -------
-    The purpose of this function is to create a violin chart using Ploty 
-    and user-specified data in a way that defaults to additional plot 
+    The purpose of this function is to create a violin chart using Ploty
+    and user-specified data in a way that defaults to additional plot
     formatting that helps make it look more visually apealing while also
-    being flexibile enough to allow for the user to easily specify 
+    being flexibile enough to allow for the user to easily specify
     formatting that they want.
 
     Parameters
@@ -521,8 +526,8 @@ def violin_plot(label_name, data_frame: pd.DataFrame, x_arg: str, mode="word", *
     label_name : str or list or Bool
         This argument allows the user to specify how the function will
         determine what will be plotted. If it is simlpy a string, then
-        that represents the label within the DataFrame that will be used 
-        to take a subset of the passed-in DataFrame to plot. If it is a 
+        that represents the label within the DataFrame that will be used
+        to take a subset of the passed-in DataFrame to plot. If it is a
         list of strings, then that represents multiple labels that will
         be used to create a (larger) subset of the passed-in DataFrame to
         plot. If it is a Boolean (either True or False), then there will
@@ -565,12 +570,12 @@ def violin_plot(label_name, data_frame: pd.DataFrame, x_arg: str, mode="word", *
             3. `plot_title` (str) - Ploty will default to having no plot
                                    title. This function will default to
                                    the title of the plot being "Histogram".
-                                   If the user wishes to specify their own 
+                                   If the user wishes to specify their own
                                    plot title, they can pass in a string
                                    to this accepted keyword argument.
-            4. `box_on` (Bool) - 
-            5. `mean_on` (Bool) - 
-            6. `points_specification` (str) - 
+            4. `box_on` (Bool) -
+            5. `mean_on` (Bool) -
+            6. `points_specification` (str) -
             7. `upper_y` (int) - Plotly (and thus this function) default
                                  to the upper bound of the y-axis being
                                  the maximum of the determined bin counts.
@@ -584,19 +589,19 @@ def violin_plot(label_name, data_frame: pd.DataFrame, x_arg: str, mode="word", *
                                     not specified.
             9. `plot_height` (int) - This accepted keyword argument allows
                                      the user to specify the height they
-                                     would like for the resulting figure 
-                                     in pixels. This defaults to 800 when 
+                                     would like for the resulting figure
+                                     in pixels. This defaults to 800 when
                                      not specified.
             10. `opacity_lvl` (float) - Plotly will, by default set the
                                         opacity level of the figure to 1.
                                         However, this function will default
                                         this value to 0.65. If the user
                                         wishes to specify their own value,
-                                        they can do so by passing in a 
-                                        float between 0 and 1 to this 
+                                        they can do so by passing in a
+                                        float between 0 and 1 to this
                                         accepted keyword argument.
-            11. `plot_color` (str) - 
-            12. `outside_line_color` (str) - 
+            11. `plot_color` (str) -
+            12. `outside_line_color` (str) -
             13. `desired_orientation` (str) - This accepted keyword
                                               argument allows for the user
                                               to specify whether they want
@@ -647,7 +652,8 @@ def violin_plot(label_name, data_frame: pd.DataFrame, x_arg: str, mode="word", *
     if mode == "word":
         # if the user would like to parse the preprocessed content by
         # WORDS.
-        def word_counter_func(row): return len(row.Preprocessed_Content.split())
+        def word_counter_func(row): return len(
+            row.Preprocessed_Content.split())
 
         def unique_word_counter_func(row): return len(
             set(row.Preprocessed_Content.split())
@@ -747,7 +753,7 @@ def subplotter(
     Purpose
     -------
     The purpose of this function is to take a list of DataFrames that
-    the user has compiled and use them to create a Plotly subplot that 
+    the user has compiled and use them to create a Plotly subplot that
     contains several plots in the specified shape.
 
     Parameters
@@ -770,7 +776,7 @@ def subplotter(
         The use of keyword arguments in this function is to specify
         parameters of the subplot that control its functionality and
         apparence. If these arguments are not specified, then they will
-        either default to their default values of a subplot (see reference 
+        either default to their default values of a subplot (see reference
         1.) or will default to pre-determined values. The list of accepted
         keyword arguments (and the values that they default to when not
         specified) are listed directly below. If you are trying to customize
@@ -781,7 +787,7 @@ def subplotter(
                                     the title of the plot being "Histogram".
                                     If the user wishes to specify their
                                     own plot title, they can pass in a
-                                    string to this accepted keyword 
+                                    string to this accepted keyword
                                     argument.
             2. `plot_width` (int) - This accepted keyword argument allows
                                     the user to specify the width they
@@ -790,8 +796,8 @@ def subplotter(
                                     not specified.
             3. `plot_height` (int) - This accepted keyword argument allows
                                      the user to specify the height they
-                                     would like for the resulting figure 
-                                     in pixels. This defaults to 800 when 
+                                     would like for the resulting figure
+                                     in pixels. This defaults to 800 when
                                      not specified.
 
     Returns
@@ -895,10 +901,10 @@ def group_plotter(group_name: str, data_frame: pd.DataFrame):
     -------
     The purpose of this function is to provide a simple tool that allows
     the user to generate bar and violin plots that describe important
-    statistics for whatever group of classes/subclasses they may be 
-    interested in. The use-case in mind was to allow for a quick 
-    investigation on the distribution of article counts and article 
-    characteristics acoross the different class labels you are 
+    statistics for whatever group of classes/subclasses they may be
+    interested in. The use-case in mind was to allow for a quick
+    investigation on the distribution of article counts and article
+    characteristics acoross the different class labels you are
     attempting to build a text classifier to predict.
 
     Parameters
@@ -912,7 +918,7 @@ def group_plotter(group_name: str, data_frame: pd.DataFrame):
     Returns
     -------
     to_return (plotly.graph_objs._figure.Figure, plotly.graph_objs._figure.Figure)
-        This function returns a tuple containing two different 
+        This function returns a tuple containing two different
         `plotly.graph_objs._figure.Figure` objects. The former corresponds
         to the created bar chart while the latter corresponds to the created
         subplot of violin plots.

@@ -11,7 +11,6 @@ Created on Tues Jul 21
 ####################################
 # Data Manipulation
 import numpy as np
-import pandas as pd
 
 # Model Classes
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
@@ -81,8 +80,8 @@ def label_transformer(labels_arr: np.array):
 
     # Now that we have this collection, pair up those values with a
     # numerical value (sequentially).
-    labels_mapper = dict( 
-        zip(unique_labels_arr.tolist(), 
+    labels_mapper = dict(
+        zip(unique_labels_arr.tolist(),
             list(range(0, unique_labels_arr.size)))
     )
 
@@ -114,7 +113,7 @@ def cv_hyperparamter_tuning(
     ----------
     model : Sklearn model object
         This object is what is returned after a Sklearn model is
-        instantiated. This represents the model whose hyper-parameters 
+        instantiated. This represents the model whose hyper-parameters
         will be tuned by this function. Note that this function only
         accepts values for this parameter that correspond to the accepted
         values of the `mode` parameter (see below).
@@ -131,7 +130,7 @@ def cv_hyperparamter_tuning(
         This function allows for the use of keyword argumnents to further
         control its behavior. Its accepted keyword arguments are:
             1. "x_train" - This REQUIRED keyword argument allows the user
-                           to specify what feature matrix will be used to 
+                           to specify what feature matrix will be used to
                            fit the CV search object(s). If this argument
                            is not specifed, then a `ValueError` will be
                            raised.
@@ -165,13 +164,13 @@ def cv_hyperparamter_tuning(
                                   to specify what scoring method to base
                                   the judgements of the CV search(es) on.
             7. "custom_search_grid" - This keyword argument allows the user
-                                      to specify any additions and/or 
+                                      to specify any additions and/or
                                       updates they would like to make to
                                       the parmater grid that is used to
                                       perform the Randomized Search. See
-                                      the source code for the default 
+                                      the source code for the default
                                       value of this dictionary grid. NOTE
-                                      that this parameter must be a 
+                                      that this parameter must be a
                                       dictionary, otherwise a `ValueError`
                                       will be raised.
 
@@ -236,14 +235,14 @@ def cv_hyperparamter_tuning(
     x_train = kwargs.get("x_train", None)
     y_train = kwargs.get("y_train", None)
     if any([
-    	isinstance(x_train, type(None)), isinstance(y_train, type(None))
+        isinstance(x_train, type(None)), isinstance(y_train, type(None))
     ]):
-    	# If the user did not specify a complete training data set.
-    	error_message = "The function expected a complete training data \
+        # If the user did not specify a complete training data set.
+        error_message = "The function expected a complete training data \
     	set to be passed in to the `x_train` and `y_train` keyword arguments. \
     	However, neither required keyword arguments were used. \nSee function \
     	docstring for more information."
-    	raise ValueError(error_message)
+        raise ValueError(error_message)
 
     k_value = kwargs.get("k_value", 5)
     k_value_random = kwargs.get("k_value_random", k_value)
@@ -360,7 +359,7 @@ def model_fitting(
     -------
     The purpose of this function is to provide an easy to use tool for
     the user that, given a specified dataset and model, fits a Sklearn
-    Machine Learning Model (that may have its class probability 
+    Machine Learning Model (that may have its class probability
     predicitions and/or hyperparameters tuned if specified) for future
     use.
 
@@ -380,7 +379,7 @@ def model_fitting(
         will be raised. The format that this argument is expecting is a
         tuple of  Numpy arrays, one representing the feature matrix and
         the  other representing the labels matrix.
-    mode : str 
+    mode : str
         This string specifies the name of the Sklearn model that is being
         worked with by this function. Note that this function only supports
         the following values for this parameter: "svm", "nb", "rf", "lr",
@@ -397,7 +396,7 @@ def model_fitting(
         CV parameter tuning function defined above to determine the best
         setting of the specified model for the specified data. NOTE that
         this parameter has a default value of True.
-    **kwargs : dict 
+    **kwargs : dict
         This function is set up to use keyword arguments to further specify
         the behavior of this function. The accepted keywords arguments
         of this function and what they do are as follows:
@@ -407,7 +406,7 @@ def model_fitting(
                                   dataset into training and testing data.
                                   This deafults to 0.25 when not specified.
             2. "k_value" - This keyword argument specifies how many folds
-                           to use when calibrating the probability 
+                           to use when calibrating the probability
                            predictions of the model (specified by the
                            passed-in  value of `mode`). NOTE that the
                            value of this keyword argument will be ignored
@@ -418,9 +417,9 @@ def model_fitting(
                                     must be a tuple that contains the
                                     feature matrix as its first argument
                                     and the labels array as its second.
-                                    Both of these objects should be Numpy 
+                                    Both of these objects should be Numpy
                                     arrays. NOTE that the value of this
-                                    argument will be ignored if the 
+                                    argument will be ignored if the
                                     `parent_class_label` argument is not
                                     set to `None`.
 
@@ -575,8 +574,8 @@ def model_fitting(
         prob_dist_isotonic = calib_isotonic_model.predict_proba(x_test)
 
         sigmoid_brier = me.multiple_brier_score_loss(
-        	y_test,
-        	prob_dist_sigmoid
+            y_test,
+            prob_dist_sigmoid
         )
         isotonic_brier = me.multiple_brier_score_loss(
             y_test, prob_dist_isotonic
@@ -598,10 +597,7 @@ def model_fitting(
     return to_return
 
 
-def models_comparison(
-    parent_class_label: str,
-    models_to_fit="all",
-    **kwargs):
+def models_comparison(parent_class_label: str, models_to_fit="all"):
     """
     Purpose
     -------
@@ -614,14 +610,14 @@ def models_comparison(
         to receive a list of child strings. NOTE that if you would like
         for the function to return all of the class labels that live in
         the tier 1 (what has oftentimes been referred to as the parent
-        class labels throughout this project), then simply pass in the 
+        class labels throughout this project), then simply pass in the
         string "parents" to this argument.
     models_to_fit : str or list; default "all"
         This argument allows
 
     Returns
     -------
-    to_return : 
+    to_return :
         This function returns a
 
     References
@@ -636,7 +632,7 @@ def models_comparison(
         actual_models_to_fit = models_to_fit
 
     # Next load in the data that will be used to train and evaluate the
-    # resulting models. 
+    # resulting models.
     feature_matrix, raw_labels_arr = bow_data_loader(parent_class_label)
     _, numerical_labels_arr = label_transformer(raw_labels_arr)
 
@@ -659,20 +655,20 @@ def models_comparison(
     # With these fitted models, use the tools in the `model_evaluation`
     # module to determine which one is best. Return the one that is
     # best.
-    unique_x_test, one_hot_y_test = me.true_classes_compilation(x_test, 
-    	                                                        y_test)
+    unique_x_test, one_hot_y_test = me.true_classes_compilation(x_test,
+                                                                y_test)
     num_class_labels = one_hot_y_test.shape[1]
     compiled_predictions_list = [
-    	me.predicted_classes_compilation(
-    		ml_model=model, 
-    		test_feature_matrix=unique_x_test, 
-    		available_labels_arr=np.arange(0, num_class_labels), 
-    		closeness_threshold=0.05
-    	) for model in best_models_list
+        me.predicted_classes_compilation(
+            ml_model=model,
+            test_feature_matrix=unique_x_test,
+            available_labels_arr=np.arange(0, num_class_labels),
+            closeness_threshold=0.05
+        ) for model in best_models_list
     ]
     metrics_list = [
-    	me.metric_reporter("hamming", one_hot_y_test, predicition) \
-    	for prediction in compiled_predictions_list
+        me.metric_reporter("hamming", one_hot_y_test, prediction)
+        for prediction in compiled_predictions_list
     ]
 
     index_of_best_model = np.argmin(metrics_list)
@@ -695,14 +691,14 @@ def save_model(parent_class_label: str, run_comparison=True, **kwargs):
         to receive a list of child strings. NOTE that if you would like
         for the function to return all of the class labels that live in
         the tier 1 (what has oftentimes been referred to as the parent
-        class labels throughout this project), then simply pass in the 
+        class labels throughout this project), then simply pass in the
         string "parents" to this argument.
     run_comparison : Bool
     **kwargs : dict
 
     Returns
     -------
-    to_return : 
+    to_return :
         This function returns a string that indicates whether or not the
         process undertaken to save the specified model was successful.
 
@@ -729,13 +725,13 @@ def load_model(parent_class_label: str, **kwargs):
         to receive a list of child strings. NOTE that if you would like
         for the function to return all of the class labels that live in
         the tier 1 (what has oftentimes been referred to as the parent
-        class labels throughout this project), then simply pass in the 
+        class labels throughout this project), then simply pass in the
         string "parents" to this argument.
     **kwargs : dict
 
     Returns
     -------
-    to_return : 
+    to_return :
         This function returns a
 
     References
