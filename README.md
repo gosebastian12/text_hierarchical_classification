@@ -7,7 +7,8 @@ In this repository, you will find the work that I have done to create a tool-kit
 Complicating matters a tiny bit is that since the world (and thus journalism) is not completely black and white, articles can have multiple class sequences such as 1. "Automotive" 2. "Auto Technology" **and** 1. "Automotive" 2."New Cars". For this reason, this system will return multiple sequences when it deems appropriate. Contrast this with the now seemingly simplicity of the typical 1-label, binary (or even multi-class) classification problem described in introductory Machine Learning courses; hence the inspiration for this project.
 
 ### 2. Repository Organization
-<details open>
+*(Use drop-down menus to see more information)*
+<details>
 <summary>1. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/20_newsgroup">"20_newgroup"</a>: Initial attempt to build a successful system w/simplier data.</summary>
   <ol>
     <li><code>data/</code>: Directory where tools that were created to access and organize the data used for this simplier system live.</li>
@@ -18,7 +19,7 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
   </ol>
 </details>
 
-<details open>
+<details>
 <summary>2. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/data">"data"</a>: Directory where propriety data gets stored.</summary>
   <ol>
     <li><code>final/</code>: Directory where data that was obtained by cleaning and/or manipulating the raw data but will be used in the final stage of development gets stored.</li>
@@ -39,7 +40,7 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
   </ol>
 </details>
 
-<details open>
+<details>
 <summary>3. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/notebooks">"notebooks"</a>: Directory where notebooks that implement the modules created in the src directory live.</summary>
   <ol>
     <li><code>1_Taxonomy_Exploration.ipynb</code>: Jupyter Notebook that</li>
@@ -50,7 +51,7 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
   </ol>
 </details>
 
-<details open>
+<details>
 <summary>4. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/src">"src"</a>: Directory that contains all of the Python code that makes up the tools implemented in this project lives.</summary>
   <ol>
     <li><code>data_scripts</code>: Sub-directory that stores all of the scripts dedicated to obtaining and manipulating data.</li>
@@ -73,7 +74,7 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
   </ol>
 </details>
 
-<details open>
+<details>
 <summary>5. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/visualizations">"visualizations"</a>: Directory that stores noteable visualizations that were created in this project.</summary>
   <ol>
     <li><code>dataset_distributions</code>: Sub-directory that contains all of the visualizations that show how the data contained in each class node is distributed.</li>
