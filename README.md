@@ -81,7 +81,10 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
   </ol>
 </details>
 
-### 3. Useful Resources
+### 3. Executive Summary
+To complete the goals of this project...
+
+### 4. Useful Resources
 The general resources that have been instrumental and quite useful are the following:
 1. [The Hitchhiker’s Guide to Hierarchical Classification](https://towardsdatascience.com/https-medium-com-noa-weiss-the-hitchhikers-guide-to-hierarchical-classification-f8428ea1e076).
 2. [Large Scale Hierarchical Classification: Foundations, Algorithms and Applications](https://cs.gmu.edu/~mlbio/presentation_SDM.pdf).
@@ -92,3 +95,5 @@ The general resources that have been instrumental and quite useful are the follo
 7. [Cookiecutter Data Science — Organize your Projects — Atom and Jupyter](https://medium.com/@rrfd/cookiecutter-data-science-organize-your-projects-atom-and-jupyter-2be7862f487e).
 
 Other more specific resources are listed in the docstrings (under the `References` section for each) for the functions written in the module `./src/`. There are also other `README` files in the important directories that can be consulted for more information on the purpose of everything in the repository.
+
+### 5. Future Directions
