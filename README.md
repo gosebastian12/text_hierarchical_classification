@@ -8,9 +8,9 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
 
 ### 2. Repository Organization
 <details open>
-<summary>1. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/20_newsgroup">"20_newgroup"</a>: Initial Attempt to build a successful system w/simplier data.</summary>
+<summary>1. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/20_newsgroup">"20_newgroup"</a>: Initial attempt to build a successful system w/simplier data.</summary>
   <ol>
-    <li><code>data/</code>: Tools that were created to access and organize the data used for this simplier system.</li>
+    <li><code>data/</code>: Directory where tools that were created to access and organize the data used for this simplier system live.</li>
       <ol>
         <li><code>raw_data/</code>: Directory where the data was ultimately stored.</li>
         <li><code>1_Load_in_data.ipynb</code>: Code that accessed and manipulated this simplier data.</li>
@@ -22,9 +22,12 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
 <summary>2. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/data">"data"</a>: Directory where propriety data gets stored.</summary>
   <ol>
     <li><code>final/</code>: Directory where data that was obtained by cleaning and/or manipulating the raw data but will be used in the final stage of development gets stored.</li>
+      <ol>
+        <li><code>BOW_data</code>Directory where the numerical data that was obtained by applying a Bag-of-word (BOW) transformation to the raw data lives. This data will be used with the final models of this tool-kit.</li>
+      </ol>
     <li><code>interim/</code>: Directory where data that was obtained by cleaning and/or manipulating the raw data but will not be used in the final stage of development gets stored.</li>
       <ol>
-        <li><code>table_dataframes</code>: This directory is where </li>
+        <li><code>table_dataframes</code>: Directory where pickled Pandas DataFrames that contain the data obtained via the Hindsight database that was then organized, wrangled, and used to generate additional data gets stored.</li>
       </ol>
     <li><code>raw/</code>: Directory where the initially accessed data gets stored.</li>
       <ol>
@@ -37,21 +40,48 @@ Complicating matters a tiny bit is that since the world (and thus journalism) is
 </details>
 
 <details open>
-<summary>3. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/notebooks">"notebooks"</a></summary>
-3.1 Well, you asked for it!
+<summary>3. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/notebooks">"notebooks"</a>: Directory where notebooks that implement the modules created in the src directory live.</summary>
+  <ol>
+    <li><code>1_Taxonomy_Exploration.ipynb</code>: Jupyter Notebook that</li>
+    <li><code>2_Accessing_Database.ipynb</code>: Jupyter Notebook that</li>
+    <li><code>3_Data_Retrival.ipynb</code>: Jupyter Notebook that</li>
+    <li><code>4_EDA.ipynb</code>: Jupyter Notebook that</li>
+    <li><code>5_Model_Implementation.ipynb</code>: Jupyter Notebook that</li>
+  </ol>
 </details>
 
 <details open>
-<summary>4. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/src">"src"</a></summary>
-4.1. Well, you asked for it!
+<summary>4. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/src">"src"</a>: Directory that contains all of the Python code that makes up the tools implemented in this project lives.</summary>
+  <ol>
+    <li><code>data_scripts</code>: Sub-directory that stores all of the scripts dedicated to obtaining and manipulating data.</li>
+      <ol>
+        <li><code>cursor_conn_setup.py</code>: (**Not** tracked in repo. for security purposes) Python script that sets up the connection between this local script and the Hindsight AWS database.</li>
+        <li><code>data_cleaning.py</code>: Python script that contains all of the functions written to clean up the text data to prepare it for a BOW transformation.</li>
+        <li><code>database_compiler.py</code>: Python script that contains all of the functions written to both obtain data from the Hindsight AWS Database and then clean it.</li>
+        <li><code>feature_engineering.py</code>: Python script that performs all of the numerical transformations to the prepared text data.</li>
+      </ol>
+    <li><code>model_scripts</code>: Sub-directory that stores all of the scripts dedicated to building the predictive models that make up this tool-kit.</li>
+      <ol>
+        <li><code>model_building.py</code>: Python script that contains the tools that build the several ML-models that comprise this project's toolkit.</li>
+        <li><code>model_evaluation.py</code>: Python script that contains the tools that allow the user to evaluate the models that were created.</li>
+        <li><code>predict.py</code>: Python script that allows the user to use all of the tools in this project to make predictions on new articles of interest.</li>
+      </ol>
+    <li><code>visualization_scripts</code>: Sub-directory that stores all of the scripts dedicated to creating the visualzations that summarize the results of this project.</li>
+      <ol>
+        <li><code>EDA.py</code>: Python script that contains the easy-to-use tools that allow the user to quickly render interesting visualizations that are relevent to this project.</li>
+      </ol>
+  </ol>
 </details>
 
 <details open>
-<summary>5. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/visualizations">"visualizations"</a></summary>
-5.1. Well, you asked for it!
+<summary>5. <a href="https://github.com/gosebastian12/text_hierarchical_classification/tree/master/visualizations">"visualizations"</a>: Directory that stores noteable visualizations that were created in this project.</summary>
+  <ol>
+    <li><code>dataset_distributions</code>: Sub-directory that contains all of the visualizations that show how the data contained in each class node is distributed.</li>
+    <li><code>1_Simple_Hierarchy_Example.jpg</code>: Image that is used in the <a href="https://github.com/gosebastian12/text_hierarchical_classification/blob/master/notebooks/4_EDA.ipynb">4_EDA.ipynb</a> notebook for illustrative purposes.</li>
+  </ol>
 </details>
 
-### Useful Resources
+### 3. Useful Resources
 The general resources that have been instrumental and quite useful are the following:
 1. [The Hitchhiker’s Guide to Hierarchical Classification](https://towardsdatascience.com/https-medium-com-noa-weiss-the-hitchhikers-guide-to-hierarchical-classification-f8428ea1e076).
 2. [Large Scale Hierarchical Classification: Foundations, Algorithms and Applications](https://cs.gmu.edu/~mlbio/presentation_SDM.pdf).
